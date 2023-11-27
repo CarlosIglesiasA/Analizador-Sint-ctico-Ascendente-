@@ -1,5 +1,3 @@
-package com.mycompany.asa;
-
 public enum TipoToken {
     IDENTIFICADOR,
 

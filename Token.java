@@ -1,11 +1,8 @@
-package com.mycompany.asa;
-
 public class Token {
 
-    final TipoToken tipo;
-    final String lexema;
-
-    final int posicion;
+    private final TipoToken tipo;
+    private final String lexema;
+    private final int posicion;
 
     public Token(TipoToken tipo, String lexema, int posicion) {
         this.tipo = tipo;
@@ -14,25 +11,31 @@ public class Token {
     }
 
     public Token(TipoToken tipo, String lexema) {
-        this.tipo = tipo;
-        this.lexema = lexema;
-        this.posicion = 0;
+        this(tipo, lexema, 0);
     }
 
     @Override
     public boolean equals(Object o) {
-        if (!(o instanceof Token)) {
-            return false;
-        }
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
 
-        if(this.tipo == ((Token)o).tipo){
-            return true;
-        }
+        Token token = (Token) o;
 
-        return false;
+        if (posicion != token.posicion) return false;
+        if (tipo != token.tipo) return false;
+        return lexema != null ? lexema.equals(token.lexema) : token.lexema == null;
     }
 
-    public String toString(){
-        return tipo + " " + lexema + " ";
+    @Override
+    public int hashCode() {
+        int result = tipo != null ? tipo.hashCode() : 0;
+        result = 31 * result + (lexema != null ? lexema.hashCode() : 0);
+        result = 31 * result + posicion;
+        return result;
+    }
+
+    @Override
+    public String toString() {
+        return String.format("%s %s (pos %d)", tipo, lexema, posicion);
     }
 }
